@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class RoleController extends Controller
@@ -13,7 +15,9 @@ class RoleController extends Controller
      */
     public function index()
     {
-        return view ('roles.index');
+        $users = User::all();
+        $admins = Role::getAdmins();
+        return view ('roles.index')->with(compact("users","admins"));
     }
 
     /**
@@ -24,6 +28,8 @@ class RoleController extends Controller
     public function create()
     {
         //
+        $role = new Role();
+        return view ('role.create')->with(compact('role'));
     }
 
     /**
@@ -46,6 +52,7 @@ class RoleController extends Controller
     public function show($id)
     {
         //
+        
     }
 
     /**
@@ -81,4 +88,41 @@ class RoleController extends Controller
     {
         //
     }
+
+    public function setAdmin($id)
+    {
+        $user = User::find($id);
+        $users = User::all();
+        $admins = Role::getAdmins();
+        $roles = Role::all();
+        foreach($roles as $role)
+        {
+            if($role->name == "Administrateur")
+            {
+                $user->role_id = $role->id;
+                break;
+            }
+        }    
+        $user->save();
+        return view ('roles.index')->with(compact("users","admins"))->with('message','Admin ajouté');
+    }
+
+    public function unsetAdmin($id)
+    {
+        $user = User::find($id);
+        $users = User::all();
+        $admins = Role::getAdmins();
+        $roles = Role::all();
+        foreach($roles as $role)
+        {
+            if($role->name == "Stud")
+            {
+                $user->role_id = $role->id;
+                break;
+            }
+        }    
+        $user->save();
+        return view ('roles.index')->with(compact("users","admins"))->with('message','Admin destitué');
+    }
+
 }
