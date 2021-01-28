@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use AddForeignKeysToOpinionstatetransitionsTable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -53,6 +54,30 @@ class User extends Authenticatable
 
     public function role()
     {
-        return $this->hasOne(Role::class);
+        return $this->belongsTo(Role::class);
+    }
+    public static function setAdmin($userPseudo)
+    {
+
+        foreach(User::all() as $user) 
+        {
+            if($user->pseudo == $userPseudo)
+            {
+                $selectedUser = $user;
+                break;    
+            }
+        }   
+         
+        $roles = Role::all();
+        foreach($roles as $role)
+        {
+            if($role->name == "Administrateur")
+            {
+                $selectedUser->role_id = $role->id;
+                break;
+            }
+        }    
+        $selectedUser->save();
+        return view ('roles.index')->with(compact("users","admins"));
     }
 }

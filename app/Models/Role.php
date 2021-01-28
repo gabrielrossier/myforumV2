@@ -15,4 +15,18 @@ class Role extends Model
     {
         return $this->hasMany(User::class);
     }
+
+    public static function getAdmins()
+    {
+        $users = User::all();
+        $admins = [];
+        foreach($users as $user)
+        {
+            if($user->role->name == "Administrateur")
+            {
+                array_push($admins,$user);
+            }
+        }
+        return $admins;
+    }
 }
