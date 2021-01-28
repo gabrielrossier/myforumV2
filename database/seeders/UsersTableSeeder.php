@@ -57,7 +57,7 @@ class UsersTableSeeder extends Seeder
                 'last_name' => 'Rossier',
                 'pseudo' => 'GRR',
                 'email' => 'GRR@myforum.ch',
-                'password' => Hash::make('Pa$$w0rd'),
+                'password' => Hash::make('1234'),
                 'role_id' => 2,
             ),
             4 =>
@@ -150,6 +150,7 @@ class UsersTableSeeder extends Seeder
                 'password' => Hash::make('Pa$$w0rd'),
                 'role_id' => 2,
             ),
+            
         ));
 
 
