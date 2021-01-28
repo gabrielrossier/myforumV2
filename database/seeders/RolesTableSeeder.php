@@ -29,6 +29,11 @@ class RolesTableSeeder extends Seeder
                 'id' => 2,
                 'name' => 'Stud',
             ),
+            2=>
+            array(
+                'id' => 3,
+                'name' => 'Administrateur',
+            )
         ));
         
         
